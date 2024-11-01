@@ -7,9 +7,16 @@ import colors from './utils'
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler'
 import { images } from '../constants'
 import CustomButton from '@/components/customButton'
+import { useGlobalContext } from '@/context/GlobalProvider'
 
 
 const App = () => {
+    const { isLoading, isLoggedIn } = useGlobalContext()
+    if (!isLoading && isLoggedIn) {
+        return <Redirect href='/home' />
+    } else if (isLoading) {
+        return null
+    }
     return (
 
         <SafeAreaView style={{
@@ -29,7 +36,6 @@ const App = () => {
                             height: 84,
                         }}
                         resizeMode='contain'
-
                     />
                     <Image
                         source={images.cards}
@@ -71,7 +77,6 @@ const App = () => {
                             }}
                             resizeMode='contain'
                         />
-
                     </View>
                     <Text style={{
                         fontSize: 14,
